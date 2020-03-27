@@ -39,9 +39,22 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
+Person.prototype.eat = function (someFood) {
+  if (this.stomach.length < 10){
+    this.stomach.push(someFood);
+  }
+};
+Person.prototype.poop = function () {
+  this.stomach = [];
+}
+Person.prototype.toString = function () {
+  return `${this.name}, ${this.age}`;
+};
 
 /*
   TASK 2
@@ -57,8 +70,17 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
+Car.prototype.fill = function(gallons){
+  for (i = 0; i < gallons; i++){
+    this.tank++; 
+  }
+  return this.tank;
 }
 
 /*
@@ -68,18 +90,26 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, favoriteToy);
+  this.name = name;
+  this.age = age;
+  this.favoriteToy = favoriteToy;  
 }
+Baby.prototype = Object.create(Person.prototype);
+Baby.prototype.play = function() {
+  return `Playing with ${this.favoriteToy}`;
+};
+
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window/global object binding is when 'this' is binded anywhere in the console that isn't specific to a function.
+  2. Implicit binding is when an object is being referenced by 'this' and the object being referenced will be in the function on the left of 'this'.
+  3. New binding is when you create a new object stemming from an original object that has key values.
+  4. Explicit binding is when the .call and .apply method is used to specifically use an object's key values and apply it to a function.
 */
 
 
